@@ -2,11 +2,12 @@
 
 ## Supported Versions
 
-Only the latest commit on `main` is supported. There are no versioned releases.
+Only the latest commit on `master` is supported. There are no versioned releases.
 
 | Branch | Supported          |
 | ------ | ------------------ |
-| main   | :white_check_mark: |
+| master   | :white_check_mark: |
+
 
 ## Reporting a Vulnerability
 
