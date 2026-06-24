@@ -105,43 +105,7 @@ diagnostics. They must be installed separately — one per language.
 4. Press `q` to close Mason
 5. Reopen your file — the LSP attaches automatically
 
-### Recommended servers per language
-
-| Language | Server | Install in Mason |
-|---|---|---|
-| Python | pyright | `/pyright` → `i` |
-| Rust | rust-analyzer | `/rust-analyzer` → `i` |
-| Go | gopls | `/gopls` → `i` |
-| JavaScript / TypeScript | ts_ls (typescript-language-server) | `/typescript` → `i` |
-| Lua | lua-language-server | `/lua-language-server` → `i` |
-| Bash | bash-language-server | `/bash-language-server` → `i` |
-| Ruby | ruby-lsp | `/ruby-lsp` → `i` |
-| PHP | intelephense | `/intelephense` → `i` |
-
-You can install as many as you want. Mason handles the downloads.
-
----
-
-## Verifying it works
-
-Open a Python file (or any language you installed a server for):
-
-```bash
-nvim test.py
-```
-
-Run these checks:
-
-| Check | How | What you should see |
-|---|---|---|
-| LSP is attached | `:LspInfo` | Server listed as attached |
-| Completion works | Type `import os` then `os.` | Popup with os functions |
-| Go-to-definition | Place cursor on a function call, press `gd` | Jumps to the definition |
-| Hover docs | Place cursor on a symbol, press `K` | Floating documentation window |
-| Diagnostics | Make a syntax error, wait 1 second | Red underline and gutter marker |
-
-If `:LspInfo` shows "no client attached," make sure you installed the server in
-Mason and restarted Neovim on the file.
+See [Language Servers](docs/lsp-servers.md) for a full list of recommended servers per language (Python, Rust, Go, JS/TS, Lua, and more). Confirm it's working → [Verifying LSP works](docs/verify.md).
 
 ---
 
@@ -205,87 +169,28 @@ Mason and restarted Neovim on the file.
 
 ---
 
-## Customizing
-
-### Change the colorscheme
-
-Set `vim.cmd.colorscheme('tokyonight')` near line 34 to any colorscheme. You can
-also change the tokyonight variant:
-
-```lua
--- Add this before colorscheme on line 34:
-require('tokyonight').setup({ style = 'storm' })  -- or 'night', 'day', 'moon'
-```
-
-### Change indent size
-
-On lines 44-45, change `2` to your preferred width:
-
-```lua
-vim.opt.shiftwidth = 4
-vim.opt.tabstop = 4
-```
-
-### Add more LSP keybindings
-
-Edit section 7 (line 97). Example — add a key to show type definition:
-
-```lua
-map('<leader>gt', vim.lsp.buf.type_definition, 'Goto Type Definition')
-```
-
-### Add plugins
-
-Append to the `vim.pack.add()` list on line 21. Example — add a file tree:
-
-```lua
-{ src = 'https://github.com/nvim-tree/nvim-tree.lua', name = 'nvim-tree.lua' },
-```
-
-Then configure the plugin in a new section at the bottom of the file.
+[Customizing your config](docs/customizing.md) — change colorscheme, indent size, add plugins, create keybindings.
 
 ---
 
-## Troubleshooting
+## Questions?
 
-### Plugins fail to install (git errors)
+If something isn't working or you have ideas to improve this starter config —
+open a [GitHub Discussion](https://github.com/Mvzundert/nvim-starter/discussions).
+I usually try to answer within a day or two.
 
-Check that `git` is installed and on your `PATH`:
+---
 
-```bash
-git --version
-```
+## Further reading
 
-If you're behind a corporate proxy, set `git config --global http.proxy http://proxy:port`.
-
-### Clipboard doesn't sync with system
-
-`unnamedplus` requires a clipboard provider. Install one:
-
-- **Linux (X11):** `sudo apt install xclip` (or `xsel`)
-- **Linux (Wayland):** `sudo apt install wl-clipboard`
-- **macOS:** `pbcopy` is built-in. Should work out of the box.
-
-### `jk` doesn't escape Insert mode
-
-The timeout might be too fast. Try slowing your typing — press `j` then `k`
-within 300ms. If it still fails, check that you haven't remapped `j` or `k`
-elsewhere in your config.
-
-### No syntax highlighting
-
-Make sure `vim.opt.termguicolors = true` is set (line 42) and your terminal
-supports 24-bit color (most modern terminals do).
-
-### Error: "vim.pack.add is nil" or plugins don't load
-
-You're running Neovim < 0.11. Update to the latest version, or use the AppImage:
-
-```bash
-curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
-chmod +x nvim.appimage
-./nvim.appimage
-```
+| What | Where |
+|---|---|
+| Popular plugins (file tree, statusline, formatter) | [docs/plugins.md](docs/plugins.md) |
+| Switch colorscheme (catppuccin, rose-pine, etc.) | [docs/themes.md](docs/themes.md) |
+| LSP server list per language | [docs/lsp-servers.md](docs/lsp-servers.md) |
+| Customize the config (colors, indents, plugins) | [docs/customizing.md](docs/customizing.md) |
+| Something broke? Fixes for common issues | [docs/troubleshooting.md](docs/troubleshooting.md) |
+| Next steps (vimtutor, learning resources) | [docs/next-steps.md](docs/next-steps.md) |
 
 ---
 
@@ -307,16 +212,3 @@ a completely clean slate:
 ```bash
 rm -rf ~/.local/share/nvim/site/pack/
 ```
-
----
-
-## Next steps
-
-1. **`vimtutor`** — 30-minute interactive tutorial (run `vimtutor` in your
-   terminal, or `:Tutor` inside Neovim)
-2. **`:help`** — the built-in manual (try `:help quickref` for a one-page
-   cheatsheet)
-3. **Read the config** — `starter/init.lua` is 179 lines, all commented. The
-   best way to learn is to read and tweak it.
-4. **Practice** — install a vim mode in your browser (Vimium, Tridactyl) to
-   build muscle memory everywhere.
