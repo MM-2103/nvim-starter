@@ -31,7 +31,7 @@ if ! command -v nvim &>/dev/null; then
 fi
 
 # ── Check Neovim version (>= 0.11 required for vim.pack.add) ─────────────────
-nvim_version=$(nvim --version | head -1 | grep -oP '[0-9]+\.[0-9]+' || echo "0.0")
+nvim_version=$(nvim --version | head -1 | grep -oE '[0-9]+\.[0-9]+' || echo "0.0")
 major=$(echo "$nvim_version" | cut -d. -f1)
 minor=$(echo "$nvim_version" | cut -d. -f2)
 
@@ -86,5 +86,5 @@ echo "     <Space>tt   toggle terminal"
     echo "     gd          go to definition (with an LSP installed)"
 echo "     K           hover documentation (with an LSP installed)"
 echo ""
-echo "Run ${BOLD}vimtutor${RESET} (or ${BOLD}:Tutor${RESET} inside Neovim) for a guided 30-minute course."
+echo -e "Run ${BOLD}vimtutor${RESET} (or ${BOLD}:Tutor${RESET} inside Neovim) for a guided 30-minute course."
 echo "To revert: copy the backup file from $CONFIG_DIR/ back to init.lua."

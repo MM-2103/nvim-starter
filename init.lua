@@ -65,7 +65,18 @@ vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 -- 5 ─ Escape Insert mode with jk ─────────────────────────────────────────────
 vim.keymap.set('i', 'jk', '<Esc>')
 
--- 6 ─ Essential keymaps (press <Space> and wait for which-key menu) ──────────
+-- 6 ─ which-key: press <Space> and wait for a descriptive menu ───────────────
+require('which-key').setup({
+  spec = {
+    { '<leader>s', group = '[S]earch' },
+    { '<leader>b', group = '[B]uffer' },
+    { '<leader>t', group = '[T]erminal' },
+    { '<leader>c', group = '[C]ode' },
+    { '<leader>r', group = '[R]ename' },
+  },
+})
+
+-- 7 ─ Essential keymaps (press <Space> and wait for which-key menu) ──────────
 
 vim.keymap.set('n', '<leader>sf', function()
   Snacks.picker.files()
@@ -95,7 +106,7 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('v', '<', '<gv')
 vim.keymap.set('v', '>', '>gv')
 
--- 7 ─ LSP: Language Server Protocol ──────────────────────────────────────────
+-- 8 ─ LSP: Language Server Protocol ──────────────────────────────────────────
 
 -- Auto-attach keymaps and features when an LSP server connects to a buffer
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -135,7 +146,7 @@ vim.lsp.config('*', {
   ),
 })
 
--- 8 ─ Mason: install language servers with a UI ──────────────────────────────
+-- 9 ─ Mason: install language servers with a UI ──────────────────────────────
 require('mason').setup()
 
 -- Auto-configure servers installed through Mason using nvim-lspconfig
@@ -143,7 +154,7 @@ require('mason-lspconfig').setup({
   automatic_installation = false,     -- install servers manually via :Mason
 })
 
--- 9 ─ blink.cmp: auto-completion ─────────────────────────────────────────────
+-- 10 ─ blink.cmp: auto-completion ─────────────────────────────────────────────
 require('blink.cmp').setup({
   keymap = {
     preset = 'none',
@@ -155,6 +166,7 @@ require('blink.cmp').setup({
     ['<Tab>'] = { 'select_next', 'fallback' },
     ['<S-Tab>'] = { 'select_prev', 'fallback' },
   },
+  fuzzy = { implementation = 'lua' },
   sources = {
     default = { 'lsp', 'path', 'snippets', 'buffer' },
   },
@@ -164,10 +176,10 @@ require('blink.cmp').setup({
   },
 })
 
--- 10 ─ Gitsigns: git change indicators in the gutter ─────────────────────────
+-- 11 ─ Gitsigns: git change indicators in the gutter ─────────────────────────
 require('gitsigns').setup()
 
--- 11 ─ Snacks: fuzzy finder, terminal, UI polish ─────────────────────────────
+-- 12 ─ Snacks: fuzzy finder, terminal, UI polish ─────────────────────────────
 require('snacks').setup({
   terminal = { enabled = true },
   picker = {
